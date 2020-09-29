@@ -1,0 +1,24 @@
+
+
+# vscode
+.vscode/
+.idea/
+
+
+htmlcov/
+
+# Python
+venv/
+__pycache__/
+coverage_html/*
+
+*.pyc
+# localstack
+.localstack/
+.coverage
+docker-compose.yml
+docker-compose.yml~
+*.sh
+
+# coverage
+.coverage
