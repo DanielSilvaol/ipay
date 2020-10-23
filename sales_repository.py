@@ -3,7 +3,7 @@ from pymongo import MongoClient
 
 class SalesRepository:
 
-    __cluster = MongoClient("")
+    __cluster = MongoClient("mongodb+srv://loba:lobaroot@loba.jbtnz.mongodb.net/loba?retryWrites=true&w=majority")
     __db = __cluster["loba"]
     __sale_collection = __db["sale"]
 
