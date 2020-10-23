@@ -1,1 +1,1 @@
-web: gunicorn ipay-iwallet.wsgi --log-file -
+web: python app.py
