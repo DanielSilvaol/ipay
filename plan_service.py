@@ -3,7 +3,7 @@ from matcher import Matcher
 
 class PlanService:
 
-    _DELTA = 0.6
+    _DELTA = 0.7
     _OUTLIER = 50
 
     def __init__(self, sales_repository):

@@ -21,10 +21,10 @@ class Matcher:
         delta = 0
         value = data['name'].lower()
         delta += self._matcher_by_letter(search, self._prepare(value))
-        delta += self._matcher_by_word(search, value) * 2
-        delta += self._matcher_by_number(search, value) * 3
+        delta += self._matcher_by_word(search, value) * 3
+        delta += self._matcher_by_number(search, value) * 4
 
-        perfect_delta = search.__len__() * 3
+        perfect_delta = search.__len__() + (search.split(" ").__len__() * 3) + (''.join([n for n in search if n.isdigit()]).__len__() * 4)
         error_bound = perfect_delta * 0.2
 
         ideal_delta = perfect_delta - error_bound
