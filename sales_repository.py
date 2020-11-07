@@ -7,7 +7,7 @@ class SalesRepository:
 
     __mongo_uri = os.getenv('MONGODB_URI')
     print(__mongo_uri)
-
+ 
     __cluster = MongoClient("mongodb+srv://admin:loba@loba.jbtnz.mongodb.net/loba?retryWrites=true&w=majority")
     __db = __cluster["loba"]
     __sale_collection = __db["sale"]
