@@ -16,8 +16,8 @@ def index():
 @app.route("/plan/product/<product_name>/price/<price>", methods=['GET'])
 def predict_plan_product(product_name, price):
     price = float(price.replace(',', '.'))
-    deal_response = plan_service.rate_deal(product_name, price)
-    return make_response(deal_response, 200)
+    # deal_response = plan_service.rate_deal(product_name, price)
+    return make_response("deal_response", 200)
 
 
 @app.route("/plan/companies", methods=['GET'])
