@@ -1,7 +1,7 @@
 from flask import Flask, make_response, json
 
-from plan_service import PlanService
-from sales_repository import SalesRepository
+# from plan_service import PlanService
+# from sales_repository import SalesRepository
 
 app = Flask(__name__)
 # sales_repository = SalesRepository()
