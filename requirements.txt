@@ -1,4 +1,4 @@
 pymongo
-flask
+Flask
 beautifulsoup4
 dnspython
