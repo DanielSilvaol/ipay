@@ -1,4 +1,1 @@
-pymongo
 flask==1.1.2
-beautifulsoup4==4.5.3
-dnspython

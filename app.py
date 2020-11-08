@@ -1,3 +1,6 @@
+import os
+
+import updater as updater
 from flask import Flask
 
 app = Flask(__name__)
