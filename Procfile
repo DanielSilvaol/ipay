@@ -1,1 +1,2 @@
-web: python app.py runserver 0.0.0.0:5000
+FLASK_APP=app.py flask run
+web: python app.py
