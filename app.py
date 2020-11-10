@@ -13,6 +13,13 @@ def index():
     return "Hello, It's IPay API!"
 
 
+@app.route("/plan/classification/<classification>/product/<product_name>/price/<price>", methods=['GET'])
+def predict_plan_product_by_classification(classification, product_name, price):
+    price = float(price.replace(',', '.'))
+    deal_response = plan_service.rate_deal_by_classification(classification, product_name, price)
+    return make_response(deal_response, 200)
+
+
 @app.route("/plan/product/<product_name>/price/<price>", methods=['GET'])
 def predict_plan_product(product_name, price):
     price = float(price.replace(',', '.'))

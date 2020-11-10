@@ -24,17 +24,31 @@ class PlanService:
                                     self.__sales_repository.find_all(),
                                     self._DELTA)
 
+    def rate_deal_by_classification(self, classification, product_name, price):
+        try:
+            deals_by_name = self.__match_products_by_classification(classification, product_name)
+            deal = self.__rate_better_than(deals_by_name, price)
+        except Exception as exc:
+            print(f'rate_deal {exc}')
+            deal = {"price_rate": price}
+        return deal
+
+    def __match_products_by_classification(self, classification, product_name):
+        return self.__matcher.match(product_name,
+                                    self.__sales_repository.find_all_by_classification(classification),
+                                    self._DELTA)
+
     def __rate_better_than(self, deals_by_name, price):
 
         if len(deals_by_name) == 0:
             return {"price_rate": price}
 
         company_better = ""
-        min_price = price
-        average_price = self._avg(list(map(lambda deal: float(deal['price'].replace(',', '.')), deals_by_name)))
+        min_price = deals_by_name[0]['price']
+        average_price = self._avg(list(map(lambda deal: deal['price'], deals_by_name)))
 
         for deal in deals_by_name:
-            deal_price = float(deal['price'].replace(',', '.'))
+            deal_price = deal['price']
             if deal_price < min_price and self._is_not_an_outlier(average_price, deal_price):
                 min_price = deal_price
                 company_better = deal['company']
@@ -44,6 +58,8 @@ class PlanService:
 
     @staticmethod
     def _calc_perc_rate(price, min_price):
+        if min_price == 0:
+            return 0
         return round((price/min_price-1)*100, 2)
 
     def _is_not_an_outlier(self, average_price, price):
@@ -52,6 +68,8 @@ class PlanService:
 
     @staticmethod
     def _avg(list):
+        if len(list) == 0:
+            return 0
         return sum(list) / len(list)
 
     def search_companies(self):

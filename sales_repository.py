@@ -15,6 +15,9 @@ class SalesRepository:
     def find_all(self):
         return self.__sale_collection.find()
 
+    def find_all_by_classification(self, classification):
+        return self.__sale_collection.find({"classification": {"$regex": classification, "$options": "i"}})
+
     def find_by_product_name(self, product_name):
         return self.__sale_collection.find({"name": {"$regex": product_name, "$options": "i"}})
 

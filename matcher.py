@@ -8,12 +8,13 @@ class Matcher:
         self._companies = sales_repository.find_all_company()
 
     def match(self, search, dataset, rate_accept):
-        search = self._prepare(self._remove_company(search))
         match_accepted = []
         for data in dataset:
             if self._match(search, data, rate_accept):
-                print(data)
+                print('{matcher} ' + str(data))
                 match_accepted.append(data)
+            else:
+                print(data)
         return match_accepted
 
     def _match(self, search, data, rate_accept):
@@ -21,10 +22,14 @@ class Matcher:
         delta = 0
         value = data['name'].lower()
         delta += self._matcher_by_letter(search, self._prepare(value))
+        delta += self._matcher_by_company(search, data) * 2
         delta += self._matcher_by_word(search, value) * 3
         delta += self._matcher_by_number(search, value) * 4
 
-        perfect_delta = search.__len__() + (search.split(" ").__len__() * 3) + (''.join([n for n in search if n.isdigit()]).__len__() * 4)
+        perfect_delta = search.__len__() * 2 + \
+                        data['company'].split(" ").__len__() * 2 + \
+                        (search.split(" ").__len__() * 3) + \
+                        (''.join([n for n in search if n.isdigit()]).__len__() * 4)
         error_bound = perfect_delta * 0.2
 
         ideal_delta = perfect_delta - error_bound
@@ -78,6 +83,14 @@ class Matcher:
     @staticmethod
     def _prepare(value):
         return value.lower().strip().replace(' ', '')
+
+    @staticmethod
+    def _matcher_by_company(search, data):
+        delta = 0
+        for w in data['company'].split(" "):
+            if w.find(search) != -1:
+                delta += 1
+        return delta
 
 
 if __name__ == '__main__':
