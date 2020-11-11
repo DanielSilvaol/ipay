@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, make_response, json
 
 from plan_service import PlanService
@@ -42,4 +44,5 @@ def search_companies_by_classification(classification):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
