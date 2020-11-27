@@ -5,6 +5,7 @@ class PlanService:
 
     _DELTA = 0.7
     _OUTLIER = 50
+    _MAX_INTEGER = 2 ** 32
 
     def __init__(self, sales_repository):
         self.__sales_repository = sales_repository
@@ -41,10 +42,10 @@ class PlanService:
     def __rate_better_than(self, deals_by_name, price):
 
         if len(deals_by_name) == 0:
-            return {"price_rate": price}
+            return {"price_rate": 0}
 
         company_better = ""
-        min_price = deals_by_name[0]['price']
+        min_price = self._MAX_INTEGER
         average_price = self._avg(list(map(lambda deal: deal['price'], deals_by_name)))
 
         for deal in deals_by_name:
@@ -54,6 +55,10 @@ class PlanService:
                 company_better = deal['company']
 
         perc_deal_rate = self._calc_perc_rate(price, min_price)
+
+        if company_better == "":
+            return {"price_rate": perc_deal_rate}
+
         return {"price_rate": perc_deal_rate, "company": company_better}
 
     @staticmethod
